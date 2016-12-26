@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package proto;
+
+message Empty {}
+
+message Device {
+  // The name of the device
+  string name = 1;
+}
+
+message DeviceList {
+  // List of Devices
+  repeated Device device = 1;
+}
+
+service WinkService {
+  rpc ListDevices (Empty) returns (DeviceList) {};
+}
