@@ -1,0 +1,31 @@
+{
+    "data":[{
+        "object_id":"27105",
+        "object_type":"light_bulb",
+        "name":"winner",
+        "manufacturer_device_model":"ge_light_bulb",
+        "manufatcurer_device_id":"123456",
+        "hub_id":"rtyui",
+        "local_id":"5",
+        "radio_type":"zigbee",
+        "device_manufacturer":"GE",
+        "subscription": {
+            "pubnub": {
+                "subscribe_key": "worghwihr0aijyp5ejhapethnpaethn",
+                "channel": "w0y8hq03hy5naeorihnse05iyjse5yijsm"
+            }
+        },
+        "locale":"en_us",
+        "units":{
+        },
+        "lat_lng":[],
+        "desired_state":{},
+        "last_reading":{},
+        "capabilities":{},
+        "created_at":1234567890
+    }],
+    "errors":[
+    ],
+    "pagination":{
+    }
+}
