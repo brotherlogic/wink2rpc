@@ -6,9 +6,10 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/brotherlogic/goserver"
 	"google.golang.org/grpc"
 
-	"github.com/brotherlogic/goserver"
+	pb "github.com/brotherlogic/wink2rpc/proto"
 )
 
 // Server the configuration for the syncer
@@ -36,7 +37,7 @@ func (r *HTTPRetriever) retrieve(url string) []byte {
 
 // DoRegister does RPC registration
 func (s Server) DoRegister(server *grpc.Server) {
-	// Does nothing
+	pb.RegisterWinkServiceServer(server, &s)
 }
 
 // InitServer builds an initial server
