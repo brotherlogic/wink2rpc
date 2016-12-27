@@ -2,6 +2,9 @@ package main
 
 import (
 	"flag"
+	"io/ioutil"
+	"log"
+	"net/http"
 
 	"google.golang.org/grpc"
 
@@ -11,7 +14,24 @@ import (
 // Server the configuration for the syncer
 type Server struct {
 	*goserver.GoServer
-	key string
+	key        string
+	retr       Retriever
+	marshaller jsonUnmarshaller
+}
+
+// HTTPRetriever pulls http pages
+type HTTPRetriever struct{}
+
+// Does a web retrieve
+func (r *HTTPRetriever) retrieve(url string) []byte {
+	resp, err := http.Get(url)
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
+
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	return body
 }
 
 // DoRegister does RPC registration
@@ -21,7 +41,7 @@ func (s Server) DoRegister(server *grpc.Server) {
 
 // InitServer builds an initial server
 func InitServer(key *string) Server {
-	server := Server{&goserver.GoServer{}, *key}
+	server := Server{&goserver.GoServer{}, *key, &HTTPRetriever{}, &prodUnmarshaller{}}
 	server.Register = server
 
 	return server
