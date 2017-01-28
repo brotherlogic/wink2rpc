@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 
 	"golang.org/x/net/context"
 
@@ -36,6 +37,7 @@ func (s *Server) ListDevices(ctx context.Context, in *pb.Empty) (*pb.DeviceList,
 	page := s.retr.retrieve(url)
 
 	response := listDevicesResponse{}
+	log.Printf("RESPONSE = %v", response)
 	s.marshaller.Unmarshal(page, &response)
 
 	list := &pb.DeviceList{}
