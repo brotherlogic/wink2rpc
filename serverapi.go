@@ -32,6 +32,7 @@ func (r *HTTPRetriever) retrieve(url string, key string) []byte {
 	}
 	req, err := http.NewRequest("GET", url, nil)
 	req.Header.Add("Authorization", "Bearer "+key)
+	log.Printf("REQUEST = %v", req)
 	if err != nil {
 		log.Fatalf("Error: %v", err)
 	}
@@ -41,7 +42,10 @@ func (r *HTTPRetriever) retrieve(url string, key string) []byte {
 		log.Fatalf("Error: %v", err)
 	}
 	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalf("WHAT = %v", err)
+	}
 	return body
 }
 
