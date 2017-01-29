@@ -14,7 +14,7 @@ import (
 
 type TestRetriever struct{}
 
-func (retriever TestRetriever) retrieve(URL string) []byte {
+func (retriever TestRetriever) retrieve(URL string, key string) []byte {
 	strippedURL := strings.Replace(strings.Replace(URL[21:], "?", "_", -1), "&", "_", -1)
 	blah, err := os.Open("testdata/" + strippedURL)
 	if err != nil {

@@ -11,7 +11,7 @@ import (
 
 // Retriever - Bridge for doing http requests
 type Retriever interface {
-	retrieve(url string) []byte
+	retrieve(url string, key string) []byte
 }
 
 type jsonUnmarshaller interface {
@@ -34,7 +34,7 @@ type listDevicesResponse struct {
 // ListDevices calls out to list all the wink devices
 func (s *Server) ListDevices(ctx context.Context, in *pb.Empty) (*pb.DeviceList, error) {
 	url := "https://api.wink.com/users/me/wink_devices"
-	page := s.retr.retrieve(url)
+	page := s.retr.retrieve(url, s.key)
 
 	response := listDevicesResponse{}
 	log.Printf("RESPONSE = %v", page)
