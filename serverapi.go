@@ -31,7 +31,7 @@ func (r *HTTPRetriever) retrieve(url string, key string) []byte {
 		log.Fatalf("Error:%v", err)
 	}
 	req, err := http.NewRequest("GET", url, nil)
-	req.Header.Add("Authorization", "Bearer: "+key)
+	req.Header.Add("Authorization", "Bearer "+key)
 	if err != nil {
 		log.Fatalf("Error: %v", err)
 	}
