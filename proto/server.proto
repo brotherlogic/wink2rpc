@@ -7,6 +7,9 @@ message Empty {}
 message Device {
   // The name of the device
   string name = 1;
+
+  // The ID of the object
+  string object_id = 2;
 }
 
 message DeviceList {
@@ -14,6 +17,12 @@ message DeviceList {
   repeated Device device = 1;
 }
 
+message LightChange {
+  Device dev = 1;
+  bool state = 2;
+}
+
 service WinkService {
   rpc ListDevices (Empty) returns (DeviceList) {};
+  rpc Switch (LightChange) returns (Empty) {};
 }

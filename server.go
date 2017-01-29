@@ -12,6 +12,7 @@ import (
 // Retriever - Bridge for doing http requests
 type Retriever interface {
 	retrieve(url string, key string) []byte
+	put(url string, key string, data string)
 }
 
 type jsonUnmarshaller interface {
@@ -46,4 +47,11 @@ func (s *Server) ListDevices(ctx context.Context, in *pb.Empty) (*pb.DeviceList,
 	}
 
 	return list, nil
+}
+
+// Switch toggles a device
+func (s *Server) Switch(ctx context.Context, state *pb.LightChange) (*pb.Empty, error) {
+	url := "https://api.wink.com/light_bulbs/" + state.Dev.ObjectId
+	s.retr.put(url, s.key, state.String())
+	return &pb.Empty{}, nil
 }

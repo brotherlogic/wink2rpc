@@ -49,6 +49,22 @@ func (r *HTTPRetriever) retrieve(url string, key string) []byte {
 	return body
 }
 
+// Does a web retrieve
+func (r *HTTPRetriever) put(url string, key string, data string) {
+	client := &http.Client{}
+	req, err := http.NewRequest("PUT", url, nil)
+	req.Header.Add("Authorization", "Bearer "+key)
+	log.Printf("REQUEST = %v", req)
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
+
+	_, err = client.Do(req)
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
+}
+
 // DoRegister does RPC registration
 func (s Server) DoRegister(server *grpc.Server) {
 	pb.RegisterWinkServiceServer(server, &s)

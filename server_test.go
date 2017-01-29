@@ -24,6 +24,10 @@ func (retriever TestRetriever) retrieve(URL string, key string) []byte {
 	return body
 }
 
+func (retriever TestRetriever) put(URL string, key string, data string) {
+	log.Printf("PUT %v", URL)
+}
+
 // Gets a test server that'll pull from local files rather than reading out
 func getTestServer() Server {
 	s := Server{}
@@ -31,6 +35,15 @@ func getTestServer() Server {
 	s.key = "madeupkey"
 	s.marshaller = prodUnmarshaller{}
 	return s
+}
+
+func TestSwitch(t *testing.T) {
+	s := getTestServer()
+	_, err := s.Switch(context.Background(), &pb.LightChange{Dev: &pb.Device{Name: "testdev", ObjectId: "testid"}, State: true})
+
+	if err != nil {
+		t.Errorf("Failure to list devices: %v", err)
+	}
 }
 
 func TestListDevices(t *testing.T) {
