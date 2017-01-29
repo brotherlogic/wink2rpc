@@ -37,7 +37,7 @@ func (s *Server) ListDevices(ctx context.Context, in *pb.Empty) (*pb.DeviceList,
 	page := s.retr.retrieve(url)
 
 	response := listDevicesResponse{}
-	log.Printf("RESPONSE = %v", response)
+	log.Printf("RESPONSE = %v", page)
 	s.marshaller.Unmarshal(page, &response)
 
 	list := &pb.DeviceList{}
