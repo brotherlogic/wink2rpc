@@ -24,12 +24,22 @@ type Server struct {
 type HTTPRetriever struct{}
 
 // Does a web retrieve
-func (r *HTTPRetriever) retrieve(url string) []byte {
-	resp, err := http.Get(url)
+func (r *HTTPRetriever) retrieve(url string, key string) []byte {
+	client := &http.Client{}
+	resp, err := client.Get(url)
+	if err != nil {
+		log.Fatalf("Error:%v", err)
+	}
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Add("Authorization", "Bearer: "+key)
 	if err != nil {
 		log.Fatalf("Error: %v", err)
 	}
 
+	resp, err = client.Do(req)
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 	return body
