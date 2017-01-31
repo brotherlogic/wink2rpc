@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"strconv"
 
@@ -31,12 +30,8 @@ func main() {
 	defer dConn.Close()
 	dClient := pb.NewWinkServiceClient(dConn)
 
-	resp, err := dClient.ListDevices(context.Background(), &pb.Empty{})
+	_, err = dClient.Switch(context.Background(), &pb.LightChange{Dev: &pb.Device{Name: "Bedroom"}, State: true})
 	if err != nil {
 		log.Fatalf("Fatal error: %v", err)
-	}
-
-	for i, device := range resp.Device {
-		fmt.Printf("%v. %v", i, device)
 	}
 }
