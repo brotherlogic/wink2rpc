@@ -54,6 +54,7 @@ func (r *HTTPRetriever) put(url string, key string, data string) {
 	client := &http.Client{}
 	req, err := http.NewRequest("PUT", url, nil)
 	req.Header.Add("Authorization", "Bearer "+key)
+	req.Header.Add("Content-Type", "application/json")
 	log.Printf("REQUEST = %v", req)
 	if err != nil {
 		log.Fatalf("Error: %v", err)
