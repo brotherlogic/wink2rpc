@@ -53,6 +53,6 @@ func (s *Server) ListDevices(ctx context.Context, in *pb.Empty) (*pb.DeviceList,
 // Switch toggles a device
 func (s *Server) Switch(ctx context.Context, state *pb.LightChange) (*pb.Empty, error) {
 	url := "https://api.wink.com/light_bulbs/" + state.Dev.ObjectId
-	s.retr.put(url, s.key, state.String())
+	s.retr.put(url, s.key, "{\"desired_state\": {\"powered\": true}}")
 	return &pb.Empty{}, nil
 }

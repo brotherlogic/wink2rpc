@@ -38,7 +38,7 @@ func main() {
 		log.Printf("%v - %v", dev.Name, dev.ObjectId)
 	}
 
-	_, err = dClient.Switch(context.Background(), &pb.LightChange{Dev: &pb.Device{Name: "Bedroom"}, State: true})
+	_, err = dClient.Switch(context.Background(), &pb.LightChange{Dev: &pb.Device{Name: "Bedroom", ObjectId: "9785e88d-980f-4b48-8eb9-69dc6d9a7b43"}, State: true})
 	if err != nil {
 		log.Fatalf("Fatal error: %v", err)
 	}
