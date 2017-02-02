@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/brotherlogic/goserver"
 	"google.golang.org/grpc"
@@ -52,7 +53,7 @@ func (r *HTTPRetriever) retrieve(url string, key string) []byte {
 // Does a web retrieve
 func (r *HTTPRetriever) put(url string, key string, data string) {
 	client := &http.Client{}
-	req, err := http.NewRequest("PUT", url, nil)
+	req, err := http.NewRequest("PUT", url, strings.NewReader(data))
 	req.Header.Add("Authorization", "Bearer "+key)
 	req.Header.Add("Content-Type", "application/json")
 	log.Printf("REQUEST = %v", req)
