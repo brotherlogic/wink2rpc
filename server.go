@@ -25,8 +25,8 @@ func (jsonUnmarshaller prodUnmarshaller) Unmarshal(inp []byte, v interface{}) er
 }
 
 type device struct {
-	Name     string
-	ObjectID string
+	Name string
+	UUID string
 }
 
 type listDevicesResponse struct {
@@ -44,7 +44,7 @@ func (s *Server) ListDevices(ctx context.Context, in *pb.Empty) (*pb.DeviceList,
 
 	list := &pb.DeviceList{}
 	for _, device := range response.Data {
-		list.Device = append(list.Device, &pb.Device{Name: device.Name, ObjectId: device.ObjectID})
+		list.Device = append(list.Device, &pb.Device{Name: device.Name, ObjectId: device.UUID})
 	}
 
 	return list, nil
