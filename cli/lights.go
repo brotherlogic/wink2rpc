@@ -30,6 +30,14 @@ func main() {
 	defer dConn.Close()
 	dClient := pb.NewWinkServiceClient(dConn)
 
+	res, err := dClient.ListDevices(context.Background(), &pb.Empty{})
+	if err != nil {
+		log.Fatalf("Fatal error: %v", err)
+	}
+	for _, dev := range res.Device {
+		log.Printf("%v - %v", dev.Name, dev.ObjectId)
+	}
+
 	_, err = dClient.Switch(context.Background(), &pb.LightChange{Dev: &pb.Device{Name: "Bedroom"}, State: true})
 	if err != nil {
 		log.Fatalf("Fatal error: %v", err)
